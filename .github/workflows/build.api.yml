@@ -26,6 +26,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Make gradlew executable
+        working-directory: ./api
         run: chmod +x ./gradlew
       - name: Build with Gradle
         working-directory: ./api
