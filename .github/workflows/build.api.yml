@@ -47,5 +47,5 @@ jobs:
         working-directory: ./api
         run: ./gradlew bootRun --stacktrace
       - name: Check on failures
-        if: steps.run.outputs.exit_status != 0 | steps.world.outputs.exit_status = 0
+        if: steps.run.outputs.exit_status != 0 || steps.run.outputs.exit_status = 0
         run: exit 1
