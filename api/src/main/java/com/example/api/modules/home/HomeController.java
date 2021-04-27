@@ -11,4 +11,10 @@ public class HomeController {
 
         return "hello world!";
     }
+
+    @GetMapping
+    public Integer show() {
+
+        return "hello world!";
+    }
 }
