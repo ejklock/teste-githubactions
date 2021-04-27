@@ -5,6 +5,14 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'  
 
 jobs:
   build:
@@ -17,5 +25,9 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+      - name: Make gradlew executable
+        working-directory: ./api
+        run: chmod +x ./gradlew
       - name: Build with Gradle
-        run: ./api/gradlew build
+        working-directory: ./api
+        run: ./gradlew build --stacktrace
