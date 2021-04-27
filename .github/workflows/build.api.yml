@@ -31,3 +31,6 @@ jobs:
       - name: Build with Gradle
         working-directory: ./api
         run: ./gradlew build --stacktrace
+      - name: Run API
+        working-directory: ./api
+        run: ./gradlew bootRun --stacktrace
