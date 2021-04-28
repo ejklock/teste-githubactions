@@ -8,6 +8,8 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+apply plugin: 'application'
+
 repositories {
 	mavenCentral()
 }
@@ -24,3 +26,11 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+application {
+    
+    def profile = findProperty('prof') ?: 'local'
+    applicationDefaultJvmArgs = ["-Dspring.profiles.active="+ profile]
+    //applicationDefaultJvmArgs = ["-Dspring.profiles.active=dev"]
+}
+
