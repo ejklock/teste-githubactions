@@ -1,4 +1,4 @@
-name: Build an Run App
+name: Build an Run API
 
 on:
   push:
