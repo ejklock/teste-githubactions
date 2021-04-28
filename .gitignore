@@ -1,3 +1,4 @@
 api/.gradle
 api/build
 api/bin
+api/.settings/org.eclipse.buildship.core.prefs

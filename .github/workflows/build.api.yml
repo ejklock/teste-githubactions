@@ -1,4 +1,4 @@
-name: Build Api
+name: Build an Run App
 
 on:
   push:
@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Log level'     
+        description: 'Rodar WorkFlow Manualmente'     
         required: true
         default: 'warning'
       tags:
-        description: 'Test scenario tags'  
+        description: 'Insira a TAG para o cenário'  
 
 jobs:
   build:

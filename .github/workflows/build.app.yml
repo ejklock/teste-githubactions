@@ -1,0 +1,37 @@
+name: Build and Run NodeJS APP
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Rodar WorkFlow Manualmente'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Insira a TAG para o cenário'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup NodeJS
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Run Yarn Install
+      run: yarn install --frozen-lockfile
+      working-directory: ./app
+    - name: RUN Eslint
+      run: yarn eslint .
+      working-directory: ./app
+    - name: Build Application
+      run: yarn build
+      working-directory: ./app
