@@ -9,8 +9,7 @@ import lombok.Data;
 @Entity
 public class Home {
 
-    @Id
     private Long id;
-    
+
     private String message;
 }
