@@ -29,7 +29,7 @@ jobs:
       run: chmod +x ./gradlew
     - name: Build Release JAR
       working-directory: ./api
-      run: ./gradlew assembleRelease
+      run: ./gradlew build
     - name: Releasing using Hub
       uses: kyze8439690/action-release-releaseapk@master
       env:
