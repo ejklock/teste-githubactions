@@ -2,8 +2,17 @@ name: Build & Publish Release JAR
 
 on:
   push:
+    branches: [ develop ]
     tags:
       - '*'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Rodar WorkFlow Manualmente'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Insira a TAG para o cenário'
 
 jobs:
   Gradle:
