@@ -11,7 +11,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 @SpringBootApplication
 public class ApiApplication {
 
-	@Value("${spring.profiles.active:local}")
+	@Value("${spring.profiles.active:release}")
 	private String activeProfile;
 
 	private static final Logger log = LoggerFactory.getLogger(ApiApplication.class);

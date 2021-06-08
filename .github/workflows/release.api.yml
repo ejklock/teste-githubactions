@@ -46,7 +46,7 @@ jobs:
         ./gradlew build -Prelease.useAutomaticVersion=true \
         -Prelease.releaseVersion=${{ env.RELEASE_VERSION }} \
         -Prelease.newVersion=${{ env.NEXT_VERSION }}
-
+    
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
