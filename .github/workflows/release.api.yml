@@ -14,11 +14,8 @@ on:
       tags:
         description: 'Insira a TAG para o cenário'
 env:
-  APP_VERSION_FILE: ./app/package.json
-  API_VERSION_FILE: ./api/gradle.properties
-  API_VERSION_EXTRACT_PATTERN: '(?<=version=).+'
-  APP_VERSION_EXTRACT_PATTERN: '"version": "([^"]+)",'
-  APP_VERSION_REPLACE_PATTERN: '"version": "\1",'
+  VERSION_FILE: ./version.properties
+  VERSION_EXTRACT_PATTERN: '(?<=VERSION=).+'
 
 jobs:
   Gradle:
@@ -33,26 +30,23 @@ jobs:
     - name: config git
       run: git config --global user.email "workflow@klocktecnologia.com" && git config --global user.name "WorkFlow Agent"
 
-    - name: Generate version for Api
+    - name: Generate version
       uses: HardNorth/github-version-generate@v1.1.1
-      env:
-       working-directory: ./api
       with:
         version-source: file
-        version-file: ${{env.API_VERSION_FILE}}
-        version-file-extraction-pattern: ${{env.API_VERSION_EXTRACT_PATTERN}}
+        version-file: ${{env.VERSION_FILE}}
+        version-file-extraction-pattern: ${{env.VERSION_EXTRACT_PATTERN}}
     
-
     - name: Make Gradle executable
       working-directory: ./api
       run: chmod +x ./gradlew
 
-    - name: Build Release with Gradle
+    - name: Build Api Release with Gradle
       working-directory: ./api
       id: release
       run: |
         ./gradlew build -Prelease.useAutomaticVersion=true \
-        -Prelease.releaseVersion=${{ env.NEXT_VERSION }} \
+        -Prelease.releaseVersion=${{ env.RELEASE_VERSION }} \
         -Prelease.newVersion=${{ env.NEXT_VERSION }}
 
     - name: Checkout
@@ -79,15 +73,6 @@ jobs:
         push: true
         tags: "ejklock/api:${{env.NEXT_VERSION}}"
     
-    - name: Generate version for App
-      uses: HardNorth/github-version-generate@v1.1.1
-      env:
-       working-directory: ./app
-      with:
-        version-source: file
-        version-file: ${{env.APP_VERSION_FILE}}
-        version-file-extraction-pattern: ${{ env.APP_VERSION_EXTRACT_PATTERN }}
-
     - name: Build and push App do Docker Registry
       uses: docker/build-push-action@v2
       with:
