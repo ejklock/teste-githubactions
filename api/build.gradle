@@ -5,11 +5,8 @@ plugins {
 }
 
 group = 'com.example'
-
-processResources {
-    expand(gradle.properties)
-}
-
+version = 'build'
+sourceCompatibility = '11'
 
 
 apply plugin: 'application'

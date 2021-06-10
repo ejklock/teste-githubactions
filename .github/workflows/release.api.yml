@@ -18,7 +18,7 @@ env:
   VERSION_EXTRACT_PATTERN: '(?<=VERSION=).+'
 
 jobs:
-  Gradle:
+  BuildRelease:
     runs-on: ubuntu-latest
     steps:
     - name: checkout code
@@ -37,18 +37,6 @@ jobs:
         version-file: ${{env.VERSION_FILE}}
         version-file-extraction-pattern: ${{env.VERSION_EXTRACT_PATTERN}}
     
-    - name: Make Gradle executable
-      working-directory: ./api
-      run: chmod +x ./gradlew
-
-    - name: Build Api Release with Gradle
-      working-directory: ./api
-      id: release
-      run: |
-        ./gradlew build -Prelease.useAutomaticVersion=true \
-        -Prelease.releaseVersion=${{ env.RELEASE_VERSION }} \
-        -Prelease.newVersion=${{ env.NEXT_VERSION }}
-
     - name: Checkout
       uses: actions/checkout@v2
 
@@ -68,8 +56,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./api
-        build-args: |
-          TAG=${{env.NEXT_VERSION}}
         push: true
         tags: "ejklock/api:${{env.NEXT_VERSION}}"
     
@@ -77,8 +63,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./app
-        build-args: |
-          TAG=${{env.NEXT_VERSION}}
         push: true
         tags: "ejklock/app:${{env.NEXT_VERSION}}"
   
