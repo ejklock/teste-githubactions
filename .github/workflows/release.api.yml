@@ -52,7 +52,7 @@ jobs:
       id: release
       run: |
         ./gradlew build -Prelease.useAutomaticVersion=true \
-        -Prelease.releaseVersion=${{ env.RELEASE_VERSION }} \
+        -Prelease.releaseVersion=${{ env.NEXT_VERSION }} \
         -Prelease.newVersion=${{ env.NEXT_VERSION }}
 
     - name: Checkout
@@ -75,9 +75,9 @@ jobs:
       with:
         context: ./api
         build-args: |
-          TAG=${{env.RELEASE_VERSION}}
+          TAG=${{env.NEXT_VERSION}}
         push: true
-        tags: "ejklock/api:${{env.RELEASE_VERSION}}"
+        tags: "ejklock/api:${{env.NEXT_VERSION}}"
     
     - name: Generate version for App
       uses: HardNorth/github-version-generate@v1.1.1
@@ -93,9 +93,9 @@ jobs:
       with:
         context: ./app
         build-args: |
-          TAG=${{env.RELEASE_VERSION}}
+          TAG=${{env.NEXT_VERSION}}
         push: true
-        tags: "ejklock/app:${{env.RELEASE_VERSION}}"
+        tags: "ejklock/app:${{env.NEXT_VERSION}}"
   
     - name: Create Release TAG
       id: create_release
