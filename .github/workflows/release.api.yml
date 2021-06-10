@@ -64,6 +64,13 @@ jobs:
         context: ./app
         push: true
         tags: "ejklock/app:${{env.NEXT_VERSION}}"
+
+    - name: Write version number to version.properties file
+      uses: christian-draeger/write-properties@1.0.1
+      with:
+        path: './version.properties'
+        property: 'VERSION'
+        value: ${{ env.NEXT_VERSION }}
   
     - name: Create Release TAG
       id: create_release
@@ -76,3 +83,4 @@ jobs:
         body: ${{ steps.readChangelogEntry.outputs.log_entry }}
         draft: false
         prerelease: false
+
